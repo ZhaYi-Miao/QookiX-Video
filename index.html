@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>QookiX Launcher · 安卓版宣传片 (1920×1080)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+  :root{
+    --cream:#FAF8F5; --caramel:#C98858; --caramel-l:#E3B18A; --caramel-d:#A96A3D;
+    --ink:#3E2C20; --ink-2:#7A6455; --muted:#C9B6A5; --line:#E8DCCF;
+  }
+  *{box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  html,body{margin:0;padding:0;height:100%;overflow:hidden;background:var(--cream);
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Segoe UI",system-ui,sans-serif;}
+  #viewport{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden;background:var(--cream)}
+  #camera{position:relative;width:1920px;height:1080px;transform-origin:center center;will-change:transform}
+  #stage{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--cream);transform-origin:center center;will-change:transform}
+  .bg-warm{position:absolute;inset:0;background:var(--cream)}
+  #heroLogo{position:absolute;left:50%;top:50%;width:280px;height:280px;margin:-140px 0 0 -140px;
+    z-index:30;opacity:0;will-change:transform,opacity}
+  .logo-box{position:relative;width:100%;height:100%}
+  .logo-box img{display:block;width:100%;height:100%;object-fit:contain}
+  .logo-box.missing img{display:none}
+  .ph-cookie{display:none;position:absolute;inset:0;
+    background:linear-gradient(158deg,#F0C285,#D2914E 52%,#B4762F)}
+  .logo-box.missing .ph-cookie{display:block}
+  .ph-cookie i{position:absolute;width:14%;height:14%;border-radius:28%;background:#59371A;box-shadow:inset 0 -2px 0 rgba(0,0,0,.28)}
+  #brand{position:absolute;left:898px;top:514px;height:52px;display:flex;align-items:center;z-index:29;opacity:0;
+    transform-origin:left center;will-change:transform,opacity}
+  #brandName{font-size:26px;font-weight:800;letter-spacing:.01em;color:var(--ink)}
+  #heroText{position:absolute;left:50%;margin-left:-620px;width:1240px;top:calc(50% + 190px);text-align:center;z-index:29;opacity:0}
+  #heroTitle{font-size:66px;font-weight:900;letter-spacing:.02em;line-height:1.1;color:var(--ink)}
+  #heroSub{margin-top:16px;font-size:23px;font-weight:600;color:var(--caramel);letter-spacing:.36em;text-indent:.36em}
+  #panels{position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:20;pointer-events:none}
+  .panel{position:absolute;left:104px;top:0;width:460px;height:1080px;
+    display:flex;flex-direction:column;justify-content:flex-start;padding-top:300px;opacity:0;will-change:transform,opacity}
+  .p-title{margin:0;font-size:104px;font-weight:900;line-height:1.04;letter-spacing:.02em;color:var(--ink)}
+  .p-list{list-style:none;margin:46px 0 0 0;padding:0}
+  .p-list .item{position:relative;display:flex;align-items:center;height:76px;
+    font-size:44px;font-weight:800;letter-spacing:.02em;color:var(--muted);
+    transform-origin:left center;opacity:.42;filter:blur(1.2px);will-change:transform,opacity,filter}
+  #screen{position:absolute;left:658px;top:287px;width:1105px;height:506px;z-index:10;opacity:0;transform-origin:center center;will-change:transform,opacity}
+  .screen-card{position:relative;width:100%;height:100%;border-radius:30px;overflow:hidden;
+    background:#0d1117;
+    border:8px solid #241C16;box-shadow:none}
+  .shot{position:absolute;opacity:0;will-change:transform,opacity}
+  .shot.desktop{inset:0}
+  .shot.phone{inset:0;z-index:3}
+  .shot img{display:block;width:100%;height:100%;object-fit:cover}
+  .shot.scroll{background:#0d1117}
+  .shot.scroll img{height:auto;width:100%;object-fit:initial}
+  .shot.missing img{display:none}
+  .ph{display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+    background:linear-gradient(150deg,#F7F2EC 0%,#F1E9E0 58%,#EFE4D8 100%)}
+  .shot.missing .ph{display:flex}
+  .ph-skel{width:56%;height:46%;position:relative;border-radius:14px;background:#FFFFFF;border:1px solid rgba(180,140,105,.16);
+    box-shadow:0 14px 34px rgba(154,112,76,.10);overflow:hidden}
+  .ph-skel::before{content:"";position:absolute;left:0;top:0;width:26%;height:100%;background:#F3EBE2;border-right:1px solid rgba(180,140,105,.14)}
+  .ph-skel::after{content:"";position:absolute;left:33%;top:16%;width:56%;height:9%;border-radius:8px;background:#EBDCCD;
+    box-shadow:0 32px 0 #F0E4D6, 0 64px 0 #F4EAE0, 0 96px 0 #F6EEE6}
+  .ph-name{font-size:19px;font-weight:800;color:var(--caramel-d);letter-spacing:.04em}
+  .ph-desc{font-size:15px;font-weight:600;color:var(--ink-2);opacity:.75;letter-spacing:.14em}
+  #tMask{position:absolute;top:-12%;height:124%;width:34%;left:-42%;
+    background:linear-gradient(90deg, rgba(201,136,88,0), rgba(201,136,88,.55) 50%, rgba(201,136,88,0));
+    transform:skewX(-20deg);transform-origin:center;opacity:0;pointer-events:none;z-index:9;will-change:left,opacity}
+  /* 注释气泡：标注开源地址与协议 */
+  .annot{position:absolute;left:36px;top:32px;z-index:12;opacity:0;display:flex;align-items:center;gap:16px;white-space:nowrap;
+    background:rgba(255,253,250,.95);backdrop-filter:blur(6px);
+    border:1px solid rgba(180,140,105,.22);border-left:5px solid var(--caramel);
+    border-radius:99px;padding:13px 26px;box-shadow:0 14px 36px rgba(120,80,50,.18);
+    will-change:transform,opacity}
+  .annot-h{font-size:20px;font-weight:800;letter-spacing:.14em;color:var(--ink-2)}
+  .annot-url{font-size:23px;font-weight:800;color:var(--caramel-d);text-decoration:none;line-height:1}
+  .annot-lic{flex:none;font-size:17px;font-weight:800;letter-spacing:.08em;
+    color:#FFF9F4;background:linear-gradient(180deg,#D3955F,#C98858);padding:7px 18px;border-radius:99px}
+  #sweep{position:absolute;inset:0;z-index:40;pointer-events:none;overflow:hidden}
+  .sw{position:absolute;top:-14%;height:128%;width:80%;transform:skewX(-20deg) translateX(-3400px)}
+  .sw:nth-child(1){left:-16%;background:#C98858}
+  .sw:nth-child(2){left:8%;background:#E3B18A}
+  .sw:nth-child(3){left:32%;background:#D89A6C}
+  #outro{position:absolute;inset:0;z-index:35;pointer-events:none}
+  #outroCols{position:absolute;left:0;top:290px;width:1920px;display:flex;justify-content:center;align-items:flex-start;gap:150px}
+  #outroText{display:flex;flex-direction:column;align-items:flex-end;text-align:right;padding-top:44px}
+  .o-line{font-size:100px;font-weight:900;line-height:1.14;letter-spacing:.06em;color:var(--ink);opacity:0}
+  #o2{color:var(--caramel)}
+  #oRepos{display:flex;flex-direction:column;gap:20px;opacity:0;will-change:transform,opacity}
+  .o-repo{display:flex;flex-direction:column;align-items:flex-start;overflow:hidden;
+    background:rgba(255,253,250,.82);border:1px solid rgba(180,140,105,.2);border-radius:24px;
+    padding:9px 24px 10px;box-shadow:0 10px 26px rgba(120,80,50,.10)}
+  .o-main{display:flex;align-items:center;gap:16px;white-space:nowrap}
+  .o-ver{font-size:15px;font-weight:700;color:var(--ink-2);letter-spacing:.05em;overflow:hidden}
+  .o-tag{flex:none;font-size:17px;font-weight:800;letter-spacing:.06em;color:#FFF9F4;
+    background:linear-gradient(180deg,#D3955F,#C98858);padding:7px 18px;border-radius:99px}
+  .o-repo a{font-size:23px;font-weight:800;color:var(--caramel-d);text-decoration:none;line-height:1.2}
+  .o-lic{flex:none;font-size:17px;font-weight:800;letter-spacing:.06em;color:var(--ink);
+    border:1.5px solid rgba(180,140,105,.45);padding:6px 17px;border-radius:99px}
+  #oBrand{position:absolute;left:0;right:0;top:730px;display:flex;flex-direction:column;align-items:center;
+    opacity:0;will-change:transform,opacity}
+  #oLogoBox{width:108px;height:108px;position:relative}
+  #oBrand .o-name{margin-top:22px;font-size:33px;font-weight:900;letter-spacing:.02em;color:var(--ink)}
+  #veil{position:absolute;inset:0;background:var(--cream);z-index:90;opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="viewport">
+  <div id="camera">
+    <div id="stage">
+      <div class="bg-warm"></div>
+
+      <div id="heroLogo"><div id="heroLogoInner"><div class="logo-box" id="heroLogoBox">
+        <img src="src/image/cookie_logo.png" alt="QookiX" />
+      </div></div></div>
+      <div id="brand"><span id="brandName">QookiX Launcher</span></div>
+
+      <div id="heroText">
+        <div id="heroTitle">QookiX Launcher</div>
+        <div id="heroSub">安卓版 · 现已上线</div>
+      </div>
+
+      <div id="panels">
+        <section class="panel" id="panel-android">
+          <h2 class="p-title">安卓版</h2>
+          <ul class="p-list" id="list-android">
+            <li class="item"><span class="txt">正式上线</span></li>
+            <li class="item"><span class="txt">移动畅玩</span></li>
+            <li class="item"><span class="txt">GitHub 已开源</span></li>
+          </ul>
+        </section>
+
+        <section class="panel" id="panel-translate">
+          <h2 class="p-title">翻译</h2>
+          <ul class="p-list" id="list-translate">
+            <li class="item"><span class="txt">多语言支持</span></li>
+            <li class="item"><span class="txt">一键中文化</span></li>
+          </ul>
+        </section>
+
+        <section class="panel" id="panel-keybind">
+          <h2 class="p-title">按键绑定</h2>
+          <ul class="p-list" id="list-keybind">
+            <li class="item"><span class="txt">可视化设置</span></li>
+          </ul>
+        </section>
+
+        <section class="panel" id="panel-tools">
+          <h2 class="p-title">小工具</h2>
+          <ul class="p-list" id="list-tools">
+            <li class="item"><span class="txt">种子地图</span></li>
+            <li class="item"><span class="txt">投影工坊</span></li>
+            <li class="item"><span class="txt">NBT 编辑器</span></li>
+          </ul>
+        </section>
+      </div>
+
+      <div id="screen">
+        <div class="screen-card" id="screenCard">
+          <div id="tMask"></div>
+          <div id="annotRepo" class="annot">
+            <div class="annot-h">开源地址</div>
+            <a class="annot-url" href="https://github.com/ZhaYi-Miao/QookiX-Launcher-Android" target="_blank">https://github.com/ZhaYi-Miao/QookiX-Launcher-Android</a>
+            <span class="annot-lic">GPL-3.0</span>
+          </div>
+          <div id="annotTrans" class="annot">
+            <div class="annot-h">翻译服务后端开源地址</div>
+            <a class="annot-url" href="https://github.com/ZhaYi-Miao/Qookix-Translate-Platform" target="_blank">https://github.com/ZhaYi-Miao/QookiX-Translate-Platform</a>
+            <span class="annot-lic">MIT</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="outro">
+        <div id="outroCols">
+          <div id="outroText">
+            <div class="o-line" id="o1">更多精彩</div>
+            <div class="o-line" id="o2">等你探索</div>
+          </div>
+          <div id="oRepos">
+            <div class="o-repo"><div class="o-main"><span class="o-tag">桌面版</span><a href="https://github.com/weimosheng/QookiX-Launcher" target="_blank">https://github.com/weimosheng/QookiX-Launcher</a><span class="o-lic">GPL-3.0</span></div><div class="o-ver">现已更新至 v0.11.0</div></div>
+            <div class="o-repo"><div class="o-main"><span class="o-tag">安卓版</span><a href="https://github.com/ZhaYi-Miao/QookiX-Launcher-Android" target="_blank">https://github.com/ZhaYi-Miao/QookiX-Launcher-Android</a><span class="o-lic">GPL-3.0</span></div><div class="o-ver">现已更新至 v1.1.0</div></div>
+            <div class="o-repo"><div class="o-main"><span class="o-tag">翻译服务 API 后端</span><a href="https://github.com/ZhaYi-Miao/Qookix-Translate-Platform" target="_blank">https://github.com/ZhaYi-Miao/Qookix-Translate-Platform</a><span class="o-lic">MIT</span></div><div class="o-ver">现已更新至 v1.0.0</div></div>
+            <div class="o-repo"><div class="o-main"><span class="o-tag">QookiX 视频</span><a href="https://github.com/ZhaYi-Miao/QookiX-Video" target="_blank">https://github.com/ZhaYi-Miao/QookiX-Video</a><span class="o-lic">GPL-3.0</span></div></div>
+          </div>
+        </div>
+        <div id="oBrand">
+          <div class="o-logo logo-box" id="oLogoBox"><img src="src/image/cookie_logo.png" alt="QookiX" /></div>
+          <div class="o-name">QookiX Launcher</div>
+        </div>
+      </div>
+
+      <div id="sweep">
+        <div class="sw"></div>
+        <div class="sw"></div>
+        <div class="sw"></div>
+      </div>
+
+      <div id="veil"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== Logo 兜底占位 ===== */
+const COOKIE_DOTS = [[24,30],[58,22],[38,52],[66,58],[20,66],[52,79]];
+const cookiePHHTML = '<div class="ph-cookie">' +
+  COOKIE_DOTS.map(d => `<i style="left:${d[0]}%;top:${d[1]}%"></i>`).join('') + '</div>';
+function bindLogoFallback(box){
+  const img = box.querySelector('img');
+  box.insertAdjacentHTML('beforeend', cookiePHHTML);
+  if (!img){ box.classList.add('missing'); return; }
+  img.addEventListener('error', () => box.classList.add('missing'));
+  if (img.complete && img.naturalWidth === 0) box.classList.add('missing');
+}
+bindLogoFallback(document.getElementById('heroLogoBox'));
+bindLogoFallback(document.getElementById('oLogoBox'));
+
+/* ===== 截图清单（按类型 + 版本号归档，放入对应目录即生效） =====
+   手机截图 → src/image/phone/1.1.0/
+   桌面截图 → src/image/pc/0.11.0/ */
+const SHOTS = [
+  { id:'android_1',   file:'src/image/phone/1.1.0/android_1.png',   label:'安卓版 · 发布主视觉', type:'phone' },
+  { id:'android_2',   file:'src/image/phone/1.1.0/android_2.png',   label:'安卓版 · 功能亮点',   type:'phone' },
+  { id:'github',      file:'src/image/pc/0.11.0/github.png',        label:'GitHub 开源地址',     type:'desktop', scroll:true },
+  { id:'translate_en',file:'src/image/pc/0.11.0/translate_en.png',  label:'内容中心 · 英文界面', type:'desktop' },
+  { id:'translate_zh',file:'src/image/pc/0.11.0/translate_zh.png',  label:'内容中心 · 中文界面', type:'desktop' },
+  { id:'keybind',     file:'src/image/pc/0.11.0/keybind.png',       label:'实例 · 按键绑定可视化', type:'desktop' },
+  { id:'seedmap',     file:'src/image/pc/0.11.0/seedmap.png',       label:'小工具 · 种子地图',   type:'desktop' },
+  { id:'projection',  file:'src/image/pc/0.11.0/projection.png',    label:'小工具 · 投影工坊',   type:'desktop' },
+  { id:'nbt_1',       file:'src/image/pc/0.11.0/nbt_1.png',         label:'小工具 · NBT 编辑器', type:'desktop' },
+  { id:'nbt_2',       file:'src/image/pc/0.11.0/nbt_2.png',         label:'小工具 · NBT 编辑器（2）', type:'desktop' }
+];
+const screenCard = document.getElementById('screenCard');
+const SHOT = {};
+SHOTS.forEach(s => {
+  const wrap = document.createElement('div');
+  wrap.className = 'shot ' + (s.type || 'desktop') + (s.scroll ? ' scroll' : '');
+  wrap.dataset.shot = s.id;
+  const inner =
+    `<img src="${s.file}" alt="${s.label}" />` +
+    `<div class="ph"><div class="ph-skel"></div>` +
+    `<div class="ph-name">${s.file.split('/').pop()}</div>` +
+    `<div class="ph-desc">${s.label}</div></div>`;
+  wrap.innerHTML = inner;
+  const img = wrap.querySelector('img');
+  img.addEventListener('error', () => wrap.classList.add('missing'));
+  if (img.complete && img.naturalWidth === 0) wrap.classList.add('missing');
+  screenCard.insertBefore(wrap, document.getElementById('tMask'));
+  SHOT[s.id] = wrap;
+});
+
+/* ===== 舞台等比缩放 ===== */
+const stage = document.getElementById('stage');
+function fitStage(){
+  const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  stage.style.transform = 'scale(' + s + ')';
+}
+window.addEventListener('resize', fitStage);
+fitStage();
+
+/* ===== 元素引用 ===== */
+const qa = sel => Array.from(document.querySelectorAll(sel));
+const androidItems   = qa('#list-android .item');
+const translateItems = qa('#list-translate .item');
+const keybindItems   = qa('#list-keybind .item');
+const toolsItems     = qa('#list-tools .item');
+const flatItems = androidItems.concat(translateItems, keybindItems, toolsItems);
+const swEls = qa('.sw');
+const SCREEN = document.getElementById('screen');
+const CAMERA = document.getElementById('camera');
+
+/* ===== 软件窗口（无 3D、无浮动） ===== */
+
+/* ===== 镜头焦点式高亮 ===== */
+function hl(list, idx){
+  const t = gsap.timeline();
+  list.forEach((el, i) => {
+    const on = i === idx;
+    t.to(el, on ? {
+      color:'#C98858', opacity:1, filter:'blur(0px)', scale:1.15, x:22,
+      duration:0.55, ease:'back.out(2)'
+    } : {
+      color:'#C9B6A5', opacity:0.42, filter:'blur(1.2px)', scale:1, x:0,
+      duration:0.46, ease:'power2.out'
+    }, 0);
+  });
+  return t;
+}
+function panelIn(id, time){
+  tl.fromTo('#'+id, { opacity:0, y:48 }, { opacity:1, y:0, duration:0.68, ease:'power3.out' }, time);
+}
+function panelOut(id, time){
+  tl.to('#'+id, { opacity:0, y:-42, duration:0.48, ease:'power2.in' }, time);
+}
+
+/* ===== 截图左右推入 + 物理反馈 ===== */
+/* 手机 / 桌面两种容器形态：手机类截图时窗口缩成手机大小 */
+const SIZE_PHONE = { left:658, top:287, width:1105, height:506 };
+const SIZE_DESK  = { left:548, top:107, width:1330, height:866 };
+const CARD_PHONE = { border:'8px solid #241C16', backgroundColor:'#0d1117', boxShadow:'0px 0px 0px rgba(0,0,0,0)' };
+const CARD_DESK  = { border:'1px solid rgba(180,140,105,0.14)', backgroundColor:'#0d1117',
+                     boxShadow:'0px 0px 0px rgba(0,0,0,0)' };
+function swap(outIds, inId, time, dur, quiet){
+  dur = dur || 0.72;
+  const outs = outIds.filter(Boolean).map(id => SHOT[id]);
+  const phone = SHOT[inId].classList.contains('phone');
+  tl.to(SCREEN, Object.assign({ duration:dur, ease:'power3.inOut' }, phone ? SIZE_PHONE : SIZE_DESK), time);
+  tl.to('#screenCard', Object.assign({ duration:0.4, ease:'power2.out' }, phone ? CARD_PHONE : CARD_DESK), time);
+  if (outs.length) tl.to(outs, { xPercent:-100, duration:dur, ease:'power3.inOut' }, time);
+  tl.fromTo(SHOT[inId],
+    { xPercent:100, opacity:1, clipPath:'inset(0 0 0 0)' },
+    { xPercent:0,  opacity:1, clipPath:'inset(0 0 0 0)', duration:dur, ease:'power3.inOut' }, time);
+  /* 长图：从顶滚动到底，前后慢中间快 */
+  if (SHOT[inId].classList.contains('scroll')) {
+    const imgEl = SHOT[inId].querySelector('img');
+    tl.fromTo(imgEl, { y:0 },
+      { y: () => -Math.max(0, imgEl.offsetHeight - SHOT[inId].clientHeight), duration:2.7, ease:'power2.inOut' },
+      time + 0.35);
+  }
+}
+
+/* ===== 翻译遮罩切换：英文在上，斜向遮罩扫过揭示底层中文 ===== */
+function maskReveal(id_zh, t){
+  const en = SHOT['translate_en'];
+  const zh = SHOT[id_zh];
+  /* 必须写进时间轴，否则循环第二轮起会失效 */
+  tl.set(zh, { xPercent:0, opacity:1, clipPath:'inset(0 0 0 0)', zIndex:4 }, t - 0.01);
+  tl.set(en, { xPercent:0, opacity:1, clipPath:'inset(0 0 0 0)', zIndex:5 }, t - 0.01);
+  /* 遮罩从左扫到右，英文从左侧被裁掉 → 露出底层中文 */
+  tl.fromTo(en, { clipPath:'inset(0 0 0 0)' }, { clipPath:'inset(0 0 0 100%)', duration:0.55, ease:'power2.inOut' }, t);
+  tl.fromTo('#tMask', { left:'-42%', opacity:0.95 }, { left:'112%', opacity:0.95, duration:0.55, ease:'power2.inOut' }, t);
+  tl.set('#tMask', { opacity:0 }, t + 0.55);
+}
+
+/* ===== 斜向切片转场 ===== */
+const SW_DUR = 0.25, SW_HOLD = 0.12, SW_STAG = 0.045;
+function sweep(t){
+  const s = gsap.timeline();
+  /* 三片用同一段行程，避免离场时片间拉开缝隙露底 */
+  const enter = -3200, exit = 3200;
+  s.set(swEls, { x: enter });
+  s.to(swEls, { x:0, duration:SW_DUR, ease:'power2.out', stagger:SW_STAG }, 0);
+  s.to(swEls, { x:exit, duration:SW_DUR, ease:'power2.in', stagger:SW_STAG }, SW_DUR + SW_HOLD);
+  tl.add(s, t);
+}
+
+/* ===== 主时间轴（30s · 循环） ===== */
+const tl = gsap.timeline({ repeat:-1, repeatDelay:0, paused:true });
+
+tl.set(SHOTS.map(s => SHOT[s.id]), { opacity:0, xPercent:0, clipPath:'inset(0 0 0 0)' }, 0);
+tl.set(flatItems, { color:'#C9B6A5', x:0, opacity:0.42, scale:1, filter:'blur(1.2px)' }, 0);
+tl.set(qa('.panel'), { opacity:0 }, 0);
+tl.set('#heroLogo', { x:0, y:0, scale:1, rotate:0 }, 0);
+tl.set('#heroLogoInner', { y:0 }, 0);
+tl.set('#brand', { opacity:0, x:-50, y:0, scale:2.0 }, 0);
+tl.set(SCREEN, { opacity:0, x:300, scale:1, left:658, top:287, width:1105, height:506 }, 0);
+tl.set('#screenCard', CARD_PHONE, 0);
+tl.set(['#o1','#o2'], { opacity:0 }, 0);
+tl.set('#oRepos', { opacity:0, y:34 }, 0);
+tl.set('.o-ver', { height:0, opacity:0, marginTop:0 }, 0);
+tl.set('#oBrand', { opacity:0, y:42 }, 0);
+tl.set('#veil', { opacity:0 }, 0);
+tl.set('#tMask', { opacity:0 }, 0);
+tl.set(['#annotRepo','#annotTrans'], { opacity:0, y:18 }, 0);
+
+/* 开场 00:00 - 00:03 */
+tl.fromTo('#heroLogo', { opacity:0, scale:0.5, y:26 }, { opacity:1, scale:1, y:0, duration:1.05, ease:'back.out(1.8)' }, 0.15);
+tl.fromTo('#heroTitle', { opacity:0, y:44 }, { opacity:1, y:0, duration:0.8, ease:'power3.out' }, 0.50);
+tl.fromTo('#heroSub',   { opacity:0, y:26 }, { opacity:1, y:0, duration:0.7, ease:'power3.out' }, 0.86);
+tl.to('#heroText', { opacity:0, y:-30, duration:0.45, ease:'power2.in' }, 2.30);
+/* 图标往左让位，产品名从图标后向右滑出（组合整体居中） */
+tl.to('#heroLogo', { x:-250, duration:0.5, ease:'power3.out' }, 2.45);
+tl.fromTo('#brand', { opacity:0, x:-50, scale:2.0 }, { opacity:1, x:0, scale:2.0, duration:0.6, ease:'power3.out' }, 2.55);
+/* 图标被文字出来的劲往右带一下（甩），再回正 */
+tl.to('#heroLogo', { rotate:14, duration:0.34, ease:'power2.out' }, 2.55);
+tl.to('#heroLogo', { rotate:0,  duration:0.62, ease:'power2.out' }, 2.90);
+/* 图标 + 产品名一起飞到屏幕左上角 */
+tl.to('#heroLogo', { x:-834, y:-486, scale:0.1857, duration:0.80, ease:'power3.inOut' }, 3.00);
+tl.to('#brand',   { x:-728, y:-486, scale:1,      duration:0.80, ease:'power3.inOut' }, 3.00);
+
+/* 安卓版（发布 + 开源同页三项）：先出文字面板，再出右侧容器 */
+panelIn('panel-android', 3.40);
+/* 首屏截图先就位，跟着容器一起出现（不单独滑入） */
+tl.set(SHOT['android_1'], { opacity:1, xPercent:0 }, 3.50);
+tl.to(SCREEN, { opacity:1, x:0, duration:0.9, ease:'power3.out' }, 3.62);
+tl.add(hl(androidItems, 0), 4.20);                    /* 正式上线 */
+tl.add(hl(androidItems, 1), 5.60);                    /* 移动畅玩 */
+swap(['android_1'], 'android_2', 5.60);
+tl.add(hl(androidItems, 2), 7.10);                    /* GitHub 已开源 */
+swap(['android_2'], 'github', 7.10);
+tl.fromTo('#annotRepo', { opacity:0, y:18 }, { opacity:1, y:0, duration:0.5, ease:'back.out(1.6)' }, 7.45);
+panelOut('panel-android', 9.40);
+sweep(10.10);                                      /* 大页面过场：安卓版 → 翻译 */
+
+/* 翻译（截图与注释都在过场盖屏期间完成切换） */
+swap(['github'], 'translate_en', 10.24, 0.45, true);
+tl.to('#annotRepo', { opacity:0, y:18, duration:0.35, ease:'power2.in' }, 10.24);
+tl.fromTo('#annotTrans', { opacity:0, y:18 }, { opacity:1, y:0, duration:0.5, ease:'back.out(1.6)' }, 10.70);
+panelIn('panel-translate', 10.90);
+tl.add(hl(translateItems, 0), 11.20);
+maskReveal('translate_zh', 12.70);
+tl.add(hl(translateItems, 1), 12.70);
+panelOut('panel-translate', 14.50);
+sweep(15.20);                                      /* 翻译 → 按键 */
+
+/* 按键绑定 */
+swap(['translate_en','translate_zh'], 'keybind', 15.34, 0.45, true);
+tl.to('#annotTrans', { opacity:0, y:18, duration:0.35, ease:'power2.in' }, 15.34);
+panelIn('panel-keybind', 15.95);
+tl.add(hl(keybindItems, 0), 16.25);
+panelOut('panel-keybind', 18.10);
+sweep(18.80);                                      /* 按键 → 小工具 */
+
+/* 小工具 */
+swap(['keybind'], 'seedmap', 18.94, 0.45, true);
+panelIn('panel-tools', 19.55);
+tl.add(hl(toolsItems, 0), 19.85);
+tl.add(hl(toolsItems, 1), 21.40);
+swap(['seedmap'], 'projection', 21.40);
+tl.add(hl(toolsItems, 2), 22.95);
+swap(['projection'], 'nbt_1', 22.95);
+tl.add(hl(toolsItems, 2), 24.50);
+swap(['nbt_1'], 'nbt_2', 24.50);
+panelOut('panel-tools', 26.20);
+
+/* 结尾落脚（斜切转场）：左标题 / 右仓库地址 / 下品牌 */
+sweep(26.90);
+tl.to(['#heroLogo','#brand'], { opacity:0, duration:0.35, ease:'power2.in' }, 26.95);
+tl.to(SCREEN, { opacity:0, x:160, duration:0.40, ease:'power2.in' }, 26.95);
+tl.fromTo('#o1', { opacity:0, y:70 }, { opacity:1, y:0, duration:0.8, ease:'back.out(1.6)' }, 27.50);
+tl.fromTo('#o2', { opacity:0, y:70 }, { opacity:1, y:0, duration:0.8, ease:'back.out(1.6)' }, 28.00);
+tl.fromTo('#oRepos', { opacity:0, y:34 }, { opacity:1, y:0, duration:0.7, ease:'power3.out' }, 28.20);
+/* 版本号卡片依次向下展开 */
+tl.to('.o-ver', { height:'auto', opacity:1, marginTop:7, duration:0.45, ease:'power2.out', stagger:0.14 }, 28.85);
+tl.fromTo('#oBrand', { opacity:0, y:44 }, { opacity:1, y:0, duration:0.75, ease:'power3.out' }, 29.75);
+tl.fromTo('#oLogoBox', { scale:0.5, rotate:-14 }, { scale:1, rotate:0, duration:0.9, ease:'back.out(2)' }, 29.75);
+tl.to('#veil', { opacity:1, duration:0.38, ease:'none' }, 31.37);
+tl.to({ _:0 }, { _:1, duration:0.001 }, 31.749);
+
+/* ===== 播放 ===== */
+let started = false;
+function start(){ if (started) return; started = true; tl.play(0); }
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(start);
+window.addEventListener('load', start);
+setTimeout(start, 1200);
+window.addEventListener('keydown', e => {
+  if (e.code === 'Space'){ e.preventDefault(); tl.paused() ? tl.play() : tl.pause(); }
+  if (e.code === 'KeyR'){ tl.play(0); }
+});
+</script>
+</body>
+</html>
